@@ -16,7 +16,7 @@ namespace TakingTest.Domain.Entities
         public List<SalesProduct> SaleProducts { get; set; }
         [JsonIgnore]
         [IgnoreDataMember]
-        public decimal SalesFinalPrice { get; set; }
+        public double SalesFinalPrice { get; set; }
 
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TakingTest.Infra.Contexts;
 
@@ -10,9 +11,11 @@ using TakingTest.Infra.Contexts;
 namespace TakingTest.Infra.Migrations
 {
     [DbContext(typeof(SaleContext))]
-    partial class SaleContextModelSnapshot : ModelSnapshot
+    [Migration("20241204171655_adjust_price_discount")]
+    partial class adjust_price_discount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");

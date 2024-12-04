@@ -13,7 +13,7 @@ namespace TakingTest.Domain.Entities
 {
     public class SalesProduct
     {
-        private decimal value;
+        private double value;
 
         public long SaleId { get; set; }
         public Sale Sale { get; set; }
@@ -24,13 +24,13 @@ namespace TakingTest.Domain.Entities
         [Required]
         public long Quantity { get; set; }
         [Required]
-        public decimal Discount { get; set; }
+        public double Discount { get; set; }
         [Required]
         public bool Canceled { get; set; }
 
         [JsonIgnore]
         [IgnoreDataMember]
-        public decimal Value
+        public double Value
         {
             get
             {

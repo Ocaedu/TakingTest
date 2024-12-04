@@ -63,8 +63,9 @@ namespace TakingTest_UnityTests.Application.Services
         [InlineData(3, 0)]
         [InlineData(4, 0.1)]
         [InlineData(11, 0.2)]
-        public void VerifyDiscountTest(long quantity, long expectedResult)
+        public void VerifyDiscountTest(long quantity, double testValue)
         {
+
             //Arrange
             SalesProductDTO entity = new SalesProductDTO
             {
@@ -78,7 +79,7 @@ namespace TakingTest_UnityTests.Application.Services
             var result = service.VerifyDiscount(entity);
 
             //Assert
-            Assert.Equal(expectedResult, result);
+            Assert.Equal(testValue, result);
         }
 
         [Fact]
@@ -86,6 +87,8 @@ namespace TakingTest_UnityTests.Application.Services
         {
             //Arrange
             SaleDTO entity = new SaleDTO();
+            List<SalesProductDTO> listSalesProductDTO = new List<SalesProductDTO>();
+            entity.SaleProducts = listSalesProductDTO;
 
             //Act
             var result = service.getSale(entity);
@@ -93,7 +96,6 @@ namespace TakingTest_UnityTests.Application.Services
             //Assert
             Assert.Equal(result, result);
         }
-
 
     }
 }

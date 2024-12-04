@@ -51,7 +51,7 @@ namespace TakingTest.Application.Services
 
         public Sale getSale(SaleDTO entity)
         {
-            decimal salesFinalPrice = 0;
+            double salesFinalPrice = 0;
             List<SalesProduct> salesProductList = new List<SalesProduct>();
             Sale sale = new Sale();
 
@@ -65,7 +65,7 @@ namespace TakingTest.Application.Services
                 SalesProduct salesProduct = new SalesProduct
                 {
                     Quantity = VerifyQuantity(item.Quantity),
-                    Discount = Convert.ToDecimal(VerifyDiscount(item)),
+                    Discount = VerifyDiscount(item),
                     Product = productService.SelectById(item.IdProduct),
                     Sale = saleService.SelectById(item.IdSale),
                     Canceled = false
