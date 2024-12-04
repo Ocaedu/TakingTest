@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace TakingTest.Domain.Entities
 {
@@ -9,10 +11,12 @@ namespace TakingTest.Domain.Entities
         [Required]
         public Branch Branch { get; set; }
         [Required]
-        public long Discount { get; set; }
+        public DateTime Date { get; set; }
         [Required]
-        public long SalesFinalPrice { get; set; }
-        [Required]
-        public List<Product> Products { get; set; }
+        public List<SalesProduct> SaleProducts { get; set; }
+        [JsonIgnore]
+        [IgnoreDataMember]
+        public decimal SalesFinalPrice { get; set; }
+
     }
 }

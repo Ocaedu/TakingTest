@@ -8,7 +8,14 @@ using TakingTest.Domain.Entities;
 
 namespace TakingTest.Application.Interfaces
 {
-    public interface ISaleApp : IBaseApp<Sale, SaleDTO>
+    public interface ISaleApp
     {
+        long Insert(SaleDTO entity);
+        void Delete(long id);
+        void Delete(SaleDTO entity);
+        void Update(SaleDTO entity);
+        Sale SelectById(long id);
+        List<Sale> SelectAll();
+
     }
 }

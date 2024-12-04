@@ -13,6 +13,6 @@ namespace TakingTest.Domain.Entities
         [StringLength(250)]
         public string Description { get; set; }
         [Required]
-        public long Price { get; set; }
+        public decimal Price { get; set; }
     }
 }

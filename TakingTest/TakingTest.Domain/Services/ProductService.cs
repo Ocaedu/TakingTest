@@ -5,8 +5,10 @@ using TakingTest.Domain.Interfaces.Services;
 
 namespace TakingTest.Domain.Services
 {
-    public class SaleService : BaseService<Sale>, ISaleService
+    public class ProductService : BaseService<Product>, IProductService
     {
-        public SaleService(ISaleRepository repository) : base(repository) { }
+        public ProductService(IProductRepository repository) : base(repository) { }
+
+
     }
 }
