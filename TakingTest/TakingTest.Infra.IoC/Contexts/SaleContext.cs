@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 using TakingTest.Domain.Entities;
 
 namespace TakingTest.Infra.Contexts
@@ -30,6 +31,21 @@ namespace TakingTest.Infra.Contexts
             }
         }
         public DbSet<Sale> Sales { get; set; }
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<Product> Product { get; set; }
+        public DbSet<Branch> Branchs { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //Service Provider
+            //modelBuilder.ApplyConfiguration(new ClientConfiguration());
+
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<SalesProduct>().HasKey(f => new { f.Product, f.Sale });
+
+        }
+
     }
 
 

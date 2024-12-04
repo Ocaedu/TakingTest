@@ -43,8 +43,10 @@ namespace TakingTest.Infra.Repositories
 
         public long Insert(TEntity entity)
         {
-            var id = context.Set<TEntity>().Add(entity).Entity.Id;
+            var newEntity = context.Set<TEntity>().Add(entity).Entity;
             context.SaveChanges();
+            var id = newEntity.Id;
+            
             return id;
         }
 
@@ -57,9 +59,6 @@ namespace TakingTest.Infra.Repositories
         {
             return context.Set<TEntity>().ToList();
         }
-
-
-
 
     }
 }
