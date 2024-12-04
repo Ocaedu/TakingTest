@@ -17,13 +17,14 @@ namespace TakingTest_UnityTests.Application.Services
         {
             _IBaseRepository = Substitute.For<IBaseRepository<Sale>>();
             service = new BaseService<Sale>(_IBaseRepository);
+            
         }
 
         [Fact]
         public void UpdateTest()
         {
             //Arrange
-            Sale sale = new Sale();
+            var sale = FakeData.salesFake();
 
             //Act
             var result = service.Update(sale);
@@ -36,7 +37,7 @@ namespace TakingTest_UnityTests.Application.Services
         public void DeleteTest()
         {
             //Arrange
-            Sale sale = new Sale();
+            var sale = FakeData.salesFake();
 
             //Act
             var result = service.Delete(sale);
@@ -49,7 +50,7 @@ namespace TakingTest_UnityTests.Application.Services
         public void DeleteIdTest()
         {
             //Arrange
-            Sale sale = new Sale();
+            var sale = FakeData.salesFake();
 
             //Act
             var result = service.Delete(1);
@@ -62,7 +63,7 @@ namespace TakingTest_UnityTests.Application.Services
         public void InsertTest()
         {
             //Arrange
-            Sale sale = new Sale();
+            var sale = FakeData.salesFake();
 
             //Act
             var result = service.Insert(sale);

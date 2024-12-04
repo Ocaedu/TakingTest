@@ -26,10 +26,10 @@ namespace TakingTest_UnityTests.Application.Services
         public void UpdateTest()
         {
             //Arrange
-            Sale sale = new Sale();
+            var sale = FakeData.salesFake();
 
             //Act
-             service.Update(sale);
+            service.Update(sale);
 
             //Assert
         }
@@ -38,7 +38,7 @@ namespace TakingTest_UnityTests.Application.Services
         public void DeleteTest()
         {
             //Arrange
-            Sale sale = new Sale();
+            var sale = FakeData.salesFake();
 
             //Act
             service.Delete(sale);
@@ -50,7 +50,7 @@ namespace TakingTest_UnityTests.Application.Services
         public void DeleteIdTest()
         {
             //Arrange
-            Sale sale = new Sale();
+            var sale = FakeData.salesFake();
 
             //Act
             service.Delete(1);

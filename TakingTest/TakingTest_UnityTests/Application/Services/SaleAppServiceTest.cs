@@ -68,12 +68,7 @@ namespace TakingTest_UnityTests.Application.Services
         public void getSaleTest()
         {
             //Arrange
-
-
-
-            SaleDTO entity = new SaleDTO();
-            List<SalesProductDTO> listSalesProductDTO = new List<SalesProductDTO>();
-            entity.SaleProducts = listSalesProductDTO;
+            var entity = FakeData.salesDTOFake();
 
             //Act
             var result = service.getSale(entity);
@@ -92,25 +87,9 @@ namespace TakingTest_UnityTests.Application.Services
             _IBranchService.SelectById(1).Returns(new Branch());
             _IClientService.SelectById(1).Returns(new Client());
             _IBaseService.Update(new Sale()).Returns(true);
-            SaleDTO entity = new SaleDTO
-            {
-                Branch = 1,
-                Client = 1,
-                Date = DateTime.Now,
-                Id = 1,
-                SalesFinalPrice = 1
-            };
-            SalesProductDTO salesProductDTO = new SalesProductDTO
-            {
-                   Canceled = false,
-                   IdProduct = 1,
-                   IdSale = 1,
-                   Quantity = 10
-            };
-            List<SalesProductDTO> listSalesProductDTO = new List<SalesProductDTO>();
-            listSalesProductDTO.Add(salesProductDTO);
-            entity.SaleProducts = listSalesProductDTO;
-
+            
+            var entity = FakeData.salesDTOFake();
+            
             //Act
             var result = service.Update(entity);
 
@@ -123,9 +102,7 @@ namespace TakingTest_UnityTests.Application.Services
         public void DeleteTest()
         {
             //Arrange
-            SaleDTO entity = new SaleDTO();
-            List<SalesProductDTO> listSalesProductDTO = new List<SalesProductDTO>();
-            entity.SaleProducts = listSalesProductDTO;
+            var entity = FakeData.salesDTOFake();
 
             //Act
             var result = service.Delete(entity);
