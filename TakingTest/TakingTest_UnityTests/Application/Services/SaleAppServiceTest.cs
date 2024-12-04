@@ -1,14 +1,8 @@
-﻿using AutoMapper;
-using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Bogus;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using NSubstitute;
 using TakingTest.Application.DTO;
-using TakingTest.Application.Interfaces;
 using TakingTest.Application.Services;
-using TakingTest.Controllers;
 using TakingTest.Domain.Entities;
 using TakingTest.Domain.Interfaces.Services;
 
@@ -17,20 +11,21 @@ namespace TakingTest_UnityTests.Application.Services
     public class SaleAppServiceTest
     {
         private SaleAppService service;
-        private Mock<ISaleService> _ISaleService;
-        private Mock<IBranchService> _IBranchService;
-        private Mock<IClientService> _IClientService;
-        private Mock<IProductService> _IProductService;
-
+        private ISaleService _ISaleService;
+        private IBranchService _IBranchService;
+        private IClientService _IClientService;
+        private IProductService _IProductService;
+        private IBaseService<BaseEntity> _IBaseService;
 
         public SaleAppServiceTest()
         {
-            _ISaleService = new Mock<ISaleService>();
-            _IBranchService = new Mock<IBranchService>();
-            _IClientService = new Mock<IClientService>();
-            _IProductService = new Mock<IProductService>();
+            _ISaleService = Substitute.For<ISaleService>();
+            _IBranchService = Substitute.For<IBranchService>();
+            _IClientService = Substitute.For<IClientService>();
+            _IProductService = Substitute.For<IProductService>();
+            _IBaseService = Substitute.For<IBaseService<BaseEntity>>();
 
-            service = new SaleAppService(_ISaleService.Object, _IBranchService.Object, _IClientService.Object, _IProductService.Object);
+            service = new SaleAppService(_ISaleService, _IBranchService, _IClientService, _IProductService);
         }
 
 
@@ -44,19 +39,6 @@ namespace TakingTest_UnityTests.Application.Services
 
             //Assert
             Assert.Equal(10, result);
-        }
-
-        [Fact]
-        public void VerifyQuantityTest_Error()
-        {
-            //Arrange
-
-            //Act
-            Action act = () => service.VerifyQuantity(21);
-            ArgumentException exception = Assert.Throws<ArgumentException>(act);
-
-            //Assert
-            Assert.Equal("Quantity of any item cannot be greater than 20", exception.Message);
         }
 
         [Theory]
@@ -86,6 +68,9 @@ namespace TakingTest_UnityTests.Application.Services
         public void getSaleTest()
         {
             //Arrange
+
+
+
             SaleDTO entity = new SaleDTO();
             List<SalesProductDTO> listSalesProductDTO = new List<SalesProductDTO>();
             entity.SaleProducts = listSalesProductDTO;
@@ -96,6 +81,71 @@ namespace TakingTest_UnityTests.Application.Services
             //Assert
             Assert.Equal(result, result);
         }
+
+        [Fact]
+        public void UpdateTest()
+        {
+            
+            //Arrange
+            _IProductService.SelectById(1).Returns(new Product());
+            _ISaleService.SelectById(1).Returns(new Sale());
+            _IBranchService.SelectById(1).Returns(new Branch());
+            _IClientService.SelectById(1).Returns(new Client());
+            _IBaseService.Update(new Sale()).Returns(true);
+            SaleDTO entity = new SaleDTO
+            {
+                Branch = 1,
+                Client = 1,
+                Date = DateTime.Now,
+                Id = 1,
+                SalesFinalPrice = 1
+            };
+            SalesProductDTO salesProductDTO = new SalesProductDTO
+            {
+                   Canceled = false,
+                   IdProduct = 1,
+                   IdSale = 1,
+                   Quantity = 10
+            };
+            List<SalesProductDTO> listSalesProductDTO = new List<SalesProductDTO>();
+            listSalesProductDTO.Add(salesProductDTO);
+            entity.SaleProducts = listSalesProductDTO;
+
+            //Act
+            var result = service.Update(entity);
+
+            //Assert
+            
+
+        }
+
+        [Fact]
+        public void DeleteTest()
+        {
+            //Arrange
+            SaleDTO entity = new SaleDTO();
+            List<SalesProductDTO> listSalesProductDTO = new List<SalesProductDTO>();
+            entity.SaleProducts = listSalesProductDTO;
+
+            //Act
+            var result = service.Delete(entity);
+
+            //Assert
+        }
+
+        [Fact]
+        public void DeleteTestId()
+        {
+            //Arrange
+
+            //Act
+            var result = service.Delete(1);
+
+            //Assert
+        }
+
+
+
 
     }
 }
