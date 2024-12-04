@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,6 +40,7 @@ namespace TakingTest.Infra.Repositories
                 context.Remove(entity);
                 context.SaveChanges();
             }
+            Log.Information("Sale id - " + id + "created");
         }
 
         public long Insert(TEntity entity)
@@ -46,7 +48,7 @@ namespace TakingTest.Infra.Repositories
             var newEntity = context.Set<TEntity>().Add(entity).Entity;
             context.SaveChanges();
             var id = newEntity.Id;
-            
+   
             return id;
         }
 

@@ -1,9 +1,8 @@
-﻿using AutoMapper;
+﻿using Serilog;
 using TakingTest.Application.Interfaces;
 using TakingTest.Domain.Entities;
 using TakingTest.Application.DTO;
 using TakingTest.Domain.Interfaces.Services;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TakingTest.Application.Services
 {
@@ -22,10 +21,11 @@ namespace TakingTest.Application.Services
             this.productService = productService;
         }
 
-        private long VerifyQuantity(long quantity)
+        public long VerifyQuantity(long quantity)
         {
             if (quantity > 20)
             {
+                Log.Error("Quantity of any item cannot be greater than 20");
                 throw new Exception("Quantity of any item cannot be greater than 20");
             }
             else
@@ -34,7 +34,7 @@ namespace TakingTest.Application.Services
             }
         }
 
-        private double VerifyDiscount(SalesProductDTO entity)
+        public double VerifyDiscount(SalesProductDTO entity)
         {
             double returnValue = 0;
 
@@ -49,7 +49,7 @@ namespace TakingTest.Application.Services
             return returnValue;
         }
 
-        private Sale getSale(SaleDTO entity)
+        public Sale getSale(SaleDTO entity)
         {
             decimal salesFinalPrice = 0;
             List<SalesProduct> salesProductList = new List<SalesProduct>();
@@ -96,6 +96,7 @@ namespace TakingTest.Application.Services
 
         public long Insert(SaleDTO entity)
         {
+
             return saleService.Insert(getSale(entity));
         }
 
