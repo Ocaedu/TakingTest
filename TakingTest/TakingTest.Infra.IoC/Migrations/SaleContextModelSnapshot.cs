@@ -102,8 +102,10 @@ namespace TakingTest.Infra.Migrations
 
             modelBuilder.Entity("TakingTest.Domain.Entities.SalesProduct", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<long>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("SaleId")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("Canceled")
@@ -112,18 +114,10 @@ namespace TakingTest.Infra.Migrations
                     b.Property<decimal>("Discount")
                         .HasColumnType("TEXT");
 
-                    b.Property<long>("ProductId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<long>("Quantity")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("SaleId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
+                    b.HasKey("ProductId", "SaleId");
 
                     b.HasIndex("SaleId");
 

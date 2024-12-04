@@ -11,7 +11,7 @@ using TakingTest.Application.DTO;
 
 namespace TakingTest.Domain.Entities
 {
-    public class SalesProductDTO : BaseDTO
+    public class SalesProductDTO
     {
         [JsonIgnore]
         [IgnoreDataMember]

@@ -22,21 +22,31 @@ namespace TakingTest.Application.Services
             this.productService = productService;
         }
 
-
-        private long VerifyDiscount(List<SalesProductDTO> entity)
+        private long VerifyQuantity(long quantity)
         {
-            var result = entity.GroupBy(c => c.IdProduct)
-                        .Select(gp => new
-                        {
-                            IdProduct = gp.Key,
-                            Quantity = gp.Sum(c => c.Quantity)
-                        });
+            if (quantity > 20)
+            {
+                throw new Exception("Quantity of any item cannot be greater than 20");
+            }
+            else
+            {
+                return quantity;
+            }
+        }
 
-            //foreach (var item in entity.OrderBy()
-            //{
+        private double VerifyDiscount(SalesProductDTO entity)
+        {
+            double returnValue = 0;
 
-            //}
-                return 1;
+            if (entity.Quantity >= 10)
+            {
+                returnValue = 0.2;
+            }
+            else
+            {
+                returnValue = entity.Quantity >= 4 ? 0.1 : 0;
+            }
+            return returnValue;
         }
 
         private Sale getSale(SaleDTO entity)
@@ -54,10 +64,9 @@ namespace TakingTest.Application.Services
             {
                 SalesProduct salesProduct = new SalesProduct
                 {
-                    Id = item.Id,
-                    Discount = VerifyDiscount(entity.SaleProducts),
+                    Quantity = VerifyQuantity(item.Quantity),
+                    Discount = Convert.ToDecimal(VerifyDiscount(item)),
                     Product = productService.SelectById(item.IdProduct),
-                    Quantity = item.Quantity,
                     Sale = saleService.SelectById(item.IdSale),
                     Canceled = false
                 };

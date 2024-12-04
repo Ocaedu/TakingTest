@@ -11,8 +11,8 @@ using TakingTest.Infra.Contexts;
 namespace TakingTest.Infra.Migrations
 {
     [DbContext(typeof(SaleContext))]
-    [Migration("20241204010839_AdjustDiscount")]
-    partial class AdjustDiscount
+    [Migration("20241204131104_Reset-migrations")]
+    partial class Resetmigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,8 +68,8 @@ namespace TakingTest.Infra.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<long>("Price")
-                        .HasColumnType("INTEGER");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -83,9 +83,6 @@ namespace TakingTest.Infra.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<long>("BranchId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("Canceled")
                         .HasColumnType("INTEGER");
 
                     b.Property<long>("ClientId")
@@ -108,25 +105,22 @@ namespace TakingTest.Infra.Migrations
 
             modelBuilder.Entity("TakingTest.Domain.Entities.SalesProduct", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("TEXT");
-
                     b.Property<long>("ProductId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("Quantity")
                         .HasColumnType("INTEGER");
 
                     b.Property<long>("SaleId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+                    b.Property<bool>("Canceled")
+                        .HasColumnType("INTEGER");
 
-                    b.HasIndex("ProductId");
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ProductId", "SaleId");
 
                     b.HasIndex("SaleId");
 

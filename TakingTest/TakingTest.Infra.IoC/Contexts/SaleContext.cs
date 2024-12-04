@@ -42,7 +42,13 @@ namespace TakingTest.Infra.Contexts
 
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<SalesProduct>().HasKey(f => new { f.Product, f.Sale });
+            modelBuilder.Entity<SalesProduct>().HasKey(f => new { f.ProductId, f.SaleId });
+
+            modelBuilder.Entity<Sale>()
+                .HasMany(e => e.SaleProducts)
+                .WithOne(e => e.Sale)
+                .HasForeignKey(e => e.SaleId)
+                .HasPrincipalKey(e => e.Id);
 
         }
 
