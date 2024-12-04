@@ -1,4 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using TakingTest.Application.DTO;
+using TakingTest.Application.Interfaces;
+using TakingTest.Domain.Entities;
+using TakingTest.Domain.Interfaces.Services;
 
 namespace TakingTest.Controllers
 {
@@ -6,17 +10,26 @@ namespace TakingTest.Controllers
     [Route("[controller]")]
     public class SalesController : ControllerBase
     {
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ISaleApp _service;
+        private readonly ILogger<SalesController> _logger;
 
-        public SalesController(ILogger<WeatherForecastController> logger)
+        public SalesController(ILogger<SalesController> logger, ISaleApp service)
         {
+            _service = service;
             _logger = logger;
         }
 
-        [HttpGet(Name = "Teste")]
-        public string Get()
+        [HttpPost]
+        public long Insert([FromBody] SaleDTO request)
         {
-            return "Teste";
+            try
+            {
+                return _service.Insert(request);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
 
