@@ -18,19 +18,43 @@ namespace TakingTest.Domain.Services
             this.repository = repository;
         }
 
-        public void Update(TEntity entity)
+        public bool Update(TEntity entity)
         {
-            repository.Update(entity);
+            try
+            {
+                repository.Update(entity);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        public void Delete(TEntity entity)
+        public bool Delete(TEntity entity)
         {
-            repository.Delete(entity);
+            try
+            {
+                repository.Delete(entity);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        public void Delete(long id)
+        public bool Delete(long id)
         {
-            repository.Delete(id);
+            try 
+            {
+                repository.Delete(id);
+                return true;
+            }
+            catch 
+            { 
+                return false; 
+            }
         }
 
         public long Insert(TEntity entity)

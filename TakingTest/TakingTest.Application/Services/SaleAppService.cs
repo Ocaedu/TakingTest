@@ -79,24 +79,23 @@ namespace TakingTest.Application.Services
             return sale;
         }
 
-        public void Update(SaleDTO entity)
+        public bool Update(SaleDTO entity)
         {
-
+            return saleService.Update(getSale(entity));
         }
 
-        public void Delete(SaleDTO entity)
+        public bool Delete(SaleDTO entity)
         {
-            saleService.Delete(getSale(entity));
+            return saleService.Delete(getSale(entity));
         }
 
-        public void Delete(long id)
+        public bool Delete(long id)
         {
-            saleService.Delete(id);
+            return saleService.Delete(id);
         }
 
         public long Insert(SaleDTO entity)
         {
-
             return saleService.Insert(getSale(entity));
         }
 

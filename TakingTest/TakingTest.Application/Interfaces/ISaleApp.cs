@@ -11,9 +11,9 @@ namespace TakingTest.Application.Interfaces
     public interface ISaleApp
     {
         long Insert(SaleDTO entity);
-        void Delete(long id);
-        void Delete(SaleDTO entity);
-        void Update(SaleDTO entity);
+        bool Delete(long id);
+        bool Delete(SaleDTO entity);
+        bool Update(SaleDTO entity);
         Sale SelectById(long id);
         List<Sale> SelectAll();
 
