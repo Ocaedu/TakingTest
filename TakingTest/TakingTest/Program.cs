@@ -40,8 +40,6 @@ builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 
 
-builder.Services.AddAutoMapper(x => x.AddProfile(new MappingEntity()));
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
