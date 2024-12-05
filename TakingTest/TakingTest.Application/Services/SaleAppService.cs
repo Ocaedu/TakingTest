@@ -149,7 +149,7 @@ namespace TakingTest.Application.Services
             {
                 item.Canceled = false;
             }
-            return saleService.Insert(getSale(entity));
+            return saleService.Insert(sale);
         }
 
         public Sale SelectById(long id)
