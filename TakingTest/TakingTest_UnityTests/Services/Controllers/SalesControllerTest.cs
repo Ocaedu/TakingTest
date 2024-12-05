@@ -23,13 +23,25 @@ namespace TakingTest_UnityTests.Services.Controllers
         public void InsertTest()
         {
             //Arrange
-            SaleDTO SaleDTO = new SaleDTO();
+            var saleDTO = FakeData.salesDTOFake();
 
             //Act
-            var result = controller.Insert(SaleDTO);
+            var result = controller.Insert(saleDTO);
 
             //Assert
             Assert.Equal(0, result);
+        }
+
+        [Fact]
+        public void UpdateTest()
+        {
+            //Arrange
+            var saleDTO = FakeData.salesDTOFake();
+
+            //Act
+            var result = controller.Update(saleDTO);
+
+            //Assert
         }
 
     }
