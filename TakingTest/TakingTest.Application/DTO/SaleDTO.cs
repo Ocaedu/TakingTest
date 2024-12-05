@@ -22,6 +22,6 @@ namespace TakingTest.Application.DTO
         public List<SalesProductDTO> SaleProducts { get; set; }
         [JsonIgnore]
         [IgnoreDataMember]
-        public long SalesFinalPrice { get; set; }
+        public double SalesFinalPrice { get; set; }
     }
 }
