@@ -34,6 +34,7 @@ namespace TakingTest.Infra.Contexts
         public DbSet<Client> Clients { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<Branch> Branchs { get; set; }
+        public DbSet<LogEntity> Logs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

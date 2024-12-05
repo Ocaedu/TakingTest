@@ -20,8 +20,6 @@ namespace TakingTest.Domain.Entities
         public long IdProduct { get; set; }
         [Required]
         public long Quantity { get; set; }
-        [JsonIgnore]
-        [IgnoreDataMember]
         public bool Canceled { get; set; }
     }
 }

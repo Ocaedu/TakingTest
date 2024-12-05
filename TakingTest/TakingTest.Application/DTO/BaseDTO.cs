@@ -11,8 +11,6 @@ namespace TakingTest.Application.DTO
 {
     public class BaseDTO
     {
-        [JsonIgnore]
-        [IgnoreDataMember]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
     }

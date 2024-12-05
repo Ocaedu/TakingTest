@@ -2,12 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using TakingTest.Application.DTO;
 using TakingTest.Application.Interfaces;
 using Serilog;
+using TakingTest.Domain.Entities;
 
 
 namespace TakingTest.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]/[action]")]
     public class SalesController : ControllerBase
     {
         private readonly ISaleApp _service;
@@ -17,7 +18,7 @@ namespace TakingTest.Controllers
             _service = service;
         }
 
-        [HttpPost]
+        [HttpPost(Name = "Insert")]
         public long Insert([FromBody] SaleDTO request)
         {
             try
@@ -33,18 +34,18 @@ namespace TakingTest.Controllers
             }
         }
 
-        [HttpDelete]
-        public bool Delete(long idSale)
+        [HttpPost(Name = "Update")]
+        public bool Update([FromBody] SaleDTO request)
         {
             try
             {
-                bool result = _service.Delete(idSale);
-                Log.Information("Sale id - " + idSale + " deleted");
+                var result = _service.Update(request);
+                Log.Information("Sale id - " + request.Id + " edited");
                 return result;
             }
             catch (Exception ex)
             {
-                Log.Error("Error deleting the sale - " + ex.Message);
+                Log.Error("Error updating the sale - " + request.Id + "" + ex.Message);
                 throw ex;
             }
         }

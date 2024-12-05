@@ -12,13 +12,50 @@ namespace TakingTest.Application.Services
         protected readonly IBranchService branchService;
         protected readonly IClientService clientService;
         protected readonly IProductService productService;
+        protected readonly ILogService logService;
 
-        public SaleAppService(ISaleService saleService, IBranchService branchService, IClientService clientService, IProductService productService)
+        public SaleAppService(ISaleService saleService, IBranchService branchService, IClientService clientService, IProductService productService, ILogService logService)
         {
             this.saleService = saleService;
             this.branchService = branchService;
             this.clientService = clientService;
             this.productService = productService;
+            this.logService = logService;
+        }
+
+        //Verify if an item was cancelled or the entire sale
+        public void VerifyCanceled(List<SalesProduct> entity)
+        {
+            long idSale = 0;
+            foreach (var item in entity)
+            {
+                if (item.Canceled == true)
+                {
+                    idSale = item.SaleId;
+                    LogEntity logEntity = new LogEntity();
+                    logEntity.Date = DateTime.Now;
+                    logEntity.Event = "Item cancelled: sale - " + item.SaleId + "product - " + item.ProductId;
+                    logService.Insert(logEntity);
+                }
+            }
+
+            var saleStatus = entity.Count(a => a.Canceled==false);
+
+            if(saleStatus == 0)
+            {
+                LogEntity logEntity = new LogEntity();
+                logEntity.Date = DateTime.Now;
+                logEntity.Event = "The sale - " + idSale + " was cancelled";
+                logService.Insert(logEntity);
+            }
+            else
+            {
+                LogEntity logEntity = new LogEntity();
+                logEntity.Date = DateTime.Now;
+                logEntity.Event = "The sale - " + idSale + " was edited";
+                logService.Insert(logEntity);
+            }
+
         }
 
         public long VerifyQuantity(long quantity)
@@ -66,9 +103,11 @@ namespace TakingTest.Application.Services
                 {
                     Quantity = VerifyQuantity(item.Quantity),
                     Discount = VerifyDiscount(item),
+                    ProductId = item.IdProduct,
                     Product = productService.SelectById(item.IdProduct),
-                    Sale = saleService.SelectById(item.IdSale),
-                    Canceled = false
+                    SaleId = entity.Id,
+                    //Sale = saleService.SelectById(entity.Id),
+                    Canceled = item.Canceled
                 };
                 salesFinalPrice = salesFinalPrice + salesProduct.Value;
                 salesProductList.Add(salesProduct);
@@ -81,7 +120,16 @@ namespace TakingTest.Application.Services
 
         public bool Update(SaleDTO entity)
         {
-            return saleService.Update(getSale(entity));
+            var sale = getSale(entity);
+            var result =  saleService.Update(sale);
+            
+            //Verifica se houve cancelamento de produto ou venda inteira
+            if (result==true)
+            {
+                VerifyCanceled(sale.SaleProducts);
+            }
+
+            return result;
         }
 
         public bool Delete(SaleDTO entity)
@@ -96,6 +144,11 @@ namespace TakingTest.Application.Services
 
         public long Insert(SaleDTO entity)
         {
+            var sale = getSale(entity);
+            foreach (var item in sale.SaleProducts)
+            {
+                item.Canceled = false;
+            }
             return saleService.Insert(getSale(entity));
         }
 

@@ -5,6 +5,7 @@ using TakingTest.Application.DTO;
 using TakingTest.Application.Services;
 using TakingTest.Domain.Entities;
 using TakingTest.Domain.Interfaces.Services;
+using TakingTest.Domain.Services;
 
 namespace TakingTest_UnityTests.Application.Services
 {
@@ -15,6 +16,7 @@ namespace TakingTest_UnityTests.Application.Services
         private IBranchService _IBranchService;
         private IClientService _IClientService;
         private IProductService _IProductService;
+        private ILogService _ILogService;
         private IBaseService<BaseEntity> _IBaseService;
 
         public SaleAppServiceTest()
@@ -24,8 +26,9 @@ namespace TakingTest_UnityTests.Application.Services
             _IClientService = Substitute.For<IClientService>();
             _IProductService = Substitute.For<IProductService>();
             _IBaseService = Substitute.For<IBaseService<BaseEntity>>();
+            _ILogService = Substitute.For<ILogService>();
 
-            service = new SaleAppService(_ISaleService, _IBranchService, _IClientService, _IProductService);
+            service = new SaleAppService(_ISaleService, _IBranchService, _IClientService, _IProductService, _ILogService);
         }
 
 
@@ -68,6 +71,9 @@ namespace TakingTest_UnityTests.Application.Services
         public void getSaleTest()
         {
             //Arrange
+            _IProductService.SelectById(1).Returns(new Product());
+            _IBranchService.SelectById(1).Returns(new Branch());
+            _IClientService.SelectById(1).Returns(new Client());
             var entity = FakeData.salesDTOFake();
 
             //Act
@@ -95,13 +101,16 @@ namespace TakingTest_UnityTests.Application.Services
 
             //Assert
             
-
         }
 
         [Fact]
         public void DeleteTest()
         {
             //Arrange
+            _IProductService.SelectById(1).Returns(new Product());
+            _ISaleService.SelectById(1).Returns(new Sale());
+            _IBranchService.SelectById(1).Returns(new Branch());
+            _IClientService.SelectById(1).Returns(new Client());
             var entity = FakeData.salesDTOFake();
 
             //Act

@@ -25,6 +25,10 @@ builder.Services.AddDbContext<SaleContext>(x => x.UseSqlite(connectionString));
 
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
+
+builder.Services.AddScoped<ILogRepository, LogRepository>();
+builder.Services.AddScoped<ILogService, LogService>();
+builder.Services.AddScoped<ILogApp, LogAppService>();
 builder.Services.AddScoped<ISaleRepository, SaleRepository>();
 builder.Services.AddScoped<IBranchRepository, BranchRepository>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
@@ -34,6 +38,7 @@ builder.Services.AddScoped<ISaleApp, SaleAppService>();
 builder.Services.AddScoped<IBranchService, BranchService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+
 
 builder.Services.AddAutoMapper(x => x.AddProfile(new MappingEntity()));
 
